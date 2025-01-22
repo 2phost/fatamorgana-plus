@@ -1,0 +1,19 @@
+{
+  "name": "Fatamorgana Plus",
+  "version": "1.0.2",
+  "description": "Fatamorgana Utilities",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://myhordes.eu/*",
+        "https://fatamorgana.md26.eu/*"
+      ],
+      "js": ["content.js"],
+      "css": ["css/styles.css"]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "fatamorgana-plus",
+  "version": "1.0.2",
+  "description": "A modular extension and userscript example with shared logic for Chrome, Firefox, and userscripts.",
+  "main": "scripts/build.js",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "clean": "rm -rf build",
+    "start": "npm run clean && npm run build"
+  },
+  "dependencies": {
+    "fs-extra": "^10.0.0"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  },
+  "author": "phost",
+  "license": "GPL-3.0-only"
+}

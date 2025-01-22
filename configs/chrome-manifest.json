@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "https://fatamorgana.md26.eu/*"
+  ],
+  "permissions": [
+    "scripting"
+  ]
+}
