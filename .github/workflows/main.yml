@@ -1,0 +1,53 @@
+name: Build and Publish Extensions
+
+on:
+  push:
+    tags:
+      - "v*" # Triggers only on version tags, e.g., v1.0.0
+
+jobs:
+  build-and-publish:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set Up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build Extensions
+      run: npm run build
+
+    - name: Browser Platform Publish
+      if: ${{ github.event_name == 'push' }}
+      uses: PlasmoHQ/bpp@v3
+      with:
+        keys: ${{ secrets.BPP_KEYS }}
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ github.ref_name }} # Use the tag name that triggered the workflow
+        release_name: "Release ${{ github.ref_name }}"
+        body: |
+          This release published new extension versions, and includes the Userscript
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Userscript to Release
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: build/userscript/modular-userscript.user.js
+        asset_name: modular-userscript.user.js
+        asset_content_type: text/javascript
